@@ -43,7 +43,7 @@ export default function Dashboard() {
         <div>
           {data.name}
         </div>
-      <button onClick={handle}>画像を検索</button>
+        <button onClick={handle}>画像を検索</button>
       </main>
 
     </div>
