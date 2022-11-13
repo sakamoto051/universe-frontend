@@ -62,7 +62,7 @@ export default function RegisterForm() {
                 .catch((error) => {
                     throw new Error(error);
                 });
-            router.push('/test');
+            router.push('/login');
         } catch (error) {
             console.log(error);
             setError(true);
