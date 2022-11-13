@@ -1,6 +1,6 @@
 import { Container, Grid } from '@mui/material'
 import Head from 'next/head'
-import LoginForm from '../components/organisms/LoginForm'
+import RegisterForm from '../components/organisms/RegisterForm'
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <Container>
         <Grid container justifyContent="center" alignItems="center" sx={{ height: '100vh' }}>
           <Grid item xs={4}>
-            <LoginForm />
+            <RegisterForm />
           </Grid>
         </Grid>
       </Container>
