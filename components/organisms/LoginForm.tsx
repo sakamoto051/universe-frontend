@@ -45,17 +45,40 @@ export default function LoginForm() {
         console.log(data);
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:8081/api/login', data)
-                .then((res) => console.log(res))
-                .catch((error) => {
-                    throw new Error(error);
+            axios.get('http://localhost:8080/sanctum/csrf-cookie', { withCredentials: true }).then(response => {
+                // ログイン処理を実装する
+                axios.post(
+                    'http://localhost:8080/login',
+                    data,
+                    { withCredentials: true }
+                )
+                .then((response) => {
+                    console.log(response.data);
+                    setLoading(false);
                 });
-            router.push('/board');
+            });
         } catch (error) {
             console.log(error);
             setError(true);
             setLoading(false);
         }
+    }
+
+    const handleUserClick = () => {
+        axios.get('http://localhost:8080/api/user', { withCredentials: true }).then((response) => {
+            console.log(response.data);
+        });
+    }
+
+    const logoutClick = () => {
+        axios.get(
+            'http://localhost:8080/api/logout',
+            { withCredentials: true }
+        )
+            .then((response) => {
+                console.log(response.data);
+                setLoading(false);
+            });
     }
 
     return (
@@ -118,6 +141,22 @@ export default function LoginForm() {
                     )}
                 </Box>
             </Stack>
+            <Button
+                variant="contained"
+                fullWidth
+                disabled={loading}
+                type='submit'
+                onClick={handleUserClick}>
+                get user data
+            </Button>
+            <Button
+                variant="contained"
+                fullWidth
+                disabled={loading}
+                type='submit'
+                onClick={logoutClick}>
+                logout
+            </Button>
         </>
     )
 }

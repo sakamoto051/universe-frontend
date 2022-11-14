@@ -31,18 +31,10 @@ export default function RegisterForm() {
         },
         email: {
             required: 'Please enter email.',
-            pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Please enter a valid email',
-            },
         },
         password: {
             required: 'Please enter password.',
             minLength: { value: 8, message: 'Please enter passowrd at least 8 characters.' },
-            pattern: {
-                value: /[A-Z0-9]/,
-                message: 'Please enter with half-width alphanumeric characters.',
-            },
         },
     }
 
@@ -55,9 +47,10 @@ export default function RegisterForm() {
     };
 
     const onSubmit: SubmitHandler<RegisterFormInput> = async (data) => {
+        console.log(data);
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:8081/api/user', data)
+            const response = await axios.post('http://localhost:8080/api/user', data, { withCredentials: true })
                 .then((res) => console.log(res))
                 .catch((error) => {
                     throw new Error(error);
