@@ -4,7 +4,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { SubmitHandler, useForm, Controller } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface LoginFormInput {
     email: string
@@ -14,7 +14,6 @@ interface LoginFormInput {
 export default function LoginForm() {
 
     const router = useRouter();
-
     const { register, handleSubmit } = useForm<LoginFormInput>({
         defaultValues: {
             email: '',
@@ -52,10 +51,9 @@ export default function LoginForm() {
                     data,
                     { withCredentials: true }
                 )
-                .then((response) => {
-                    console.log(response.data);
-                    setLoading(false);
-                });
+                    .then((response) => {
+                        router.push('/threads');
+                    });
             });
         } catch (error) {
             console.log(error);

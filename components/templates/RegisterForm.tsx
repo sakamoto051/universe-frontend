@@ -4,7 +4,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { SubmitHandler, useForm, Controller} from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
 interface RegisterFormInput {
     name: string
@@ -27,7 +27,7 @@ export default function RegisterForm() {
     const validationRules = {
         name: {
             required: 'Please enter name.',
-            maxLength: { value: 128, message: 'Please enter passowrd at most 128 characters.'},
+            maxLength: { value: 128, message: 'Please enter passowrd at most 128 characters.' },
         },
         email: {
             required: 'Please enter email.',
@@ -68,7 +68,7 @@ export default function RegisterForm() {
             <Stack
                 component='form'
                 onSubmit={handleSubmit(onSubmit)}
-                >
+            >
                 {error && (
                     <Alert severity="error">An error has occurred! Please retry!</Alert>
                 )}
@@ -126,13 +126,13 @@ export default function RegisterForm() {
                                 sx={{ mt: 2 }}
                                 InputProps={{
                                     endAdornment:
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={handleClickShowPassword}
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleClickShowPassword}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
                                 }}
                             />
                             <FormHelperText>{fieldState.error?.message}</FormHelperText>
@@ -147,7 +147,7 @@ export default function RegisterForm() {
                         fullWidth
                         disabled={loading}
                         type='submit'
-                        >
+                    >
                         Register
                     </Button>
                     {loading && (

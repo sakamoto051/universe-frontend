@@ -1,6 +1,6 @@
 import { Container, Grid } from '@mui/material'
 import Head from 'next/head'
-import LoginForm from '../../components/organisms/LoginForm'
+import LoginForm from '../../components/templates/LoginForm'
 
 export default function Home() {
     return (
