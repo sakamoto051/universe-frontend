@@ -1,37 +1,18 @@
-import { Alert, Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
-interface LoginFormInput {
-    email: string
-    password: string
-}
+import { RegisterLink } from '../atoms/Link/RegisterLink';
+import { LoginFormValues } from '../../interfaces/LoginFormValues';
+import { LoginFormRules } from '../../rules/LoginFormRules';
+import { Loading } from '../atoms/Loading';
 
 export default function LoginForm() {
-
     const router = useRouter();
-    const { register, handleSubmit } = useForm<LoginFormInput>({
-        defaultValues: {
-            email: '',
-            password: '',
-        }
-    });
-
-    const validationRules = {
-        email: {
-            required: true,
-        },
-        password: {
-            required: true,
-            minLength: 8,
-            maxLength: 32,
-        },
-    }
-
+    const { register, handleSubmit } = useForm<LoginFormValues>();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +21,7 @@ export default function LoginForm() {
         setShowPassword(!showPassword);
     };
 
-    const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
+    const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
         console.log(data);
         setLoading(true);
         try {
@@ -62,23 +43,6 @@ export default function LoginForm() {
         }
     }
 
-    const handleUserClick = () => {
-        axios.get('http://localhost:8080/api/user', { withCredentials: true }).then((response) => {
-            console.log(response.data);
-        });
-    }
-
-    const logoutClick = () => {
-        axios.get(
-            'http://localhost:8080/api/logout',
-            { withCredentials: true }
-        )
-            .then((response) => {
-                console.log(response.data);
-                setLoading(false);
-            });
-    }
-
     return (
         <>
             <Stack
@@ -95,7 +59,7 @@ export default function LoginForm() {
                     label='Email'
                     type='email'
                     disabled={loading}
-                    inputProps={validationRules.email}
+                    inputProps={LoginFormRules.email}
                 />
 
                 <TextField
@@ -104,7 +68,7 @@ export default function LoginForm() {
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     disabled={loading}
-                    inputProps={validationRules.password}
+                    inputProps={LoginFormRules.password}
                     InputProps={{
                         endAdornment:
                             <InputAdornment position="end">
@@ -126,35 +90,10 @@ export default function LoginForm() {
                     >
                         Login
                     </Button>
-                    {loading && (
-                        <CircularProgress
-                            size={24}
-                            sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)'
-                            }}
-                        />
-                    )}
+                    {loading && <Loading />}
                 </Box>
+                <RegisterLink />
             </Stack>
-            <Button
-                variant="contained"
-                fullWidth
-                disabled={loading}
-                type='submit'
-                onClick={handleUserClick}>
-                get user data
-            </Button>
-            <Button
-                variant="contained"
-                fullWidth
-                disabled={loading}
-                type='submit'
-                onClick={logoutClick}>
-                logout
-            </Button>
         </>
     )
 }

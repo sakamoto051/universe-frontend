@@ -1,22 +1,20 @@
-import { Alert, Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, FormControl, FormHelperText, IconButton, InputAdornment, Link, Stack, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-
-interface RegisterFormInput {
-    name: string
-    email: string
-    password: string
-}
+import { LoginLink } from '../atoms/Link/LoginLink';
+import { RegisterFormValues } from '../../interfaces/RegisterFormValues';
+import { RegisterFormRules } from '../../rules/RegisterFormRules';
 
 export default function RegisterForm() {
-
     const router = useRouter();
-
-    const { control, handleSubmit } = useForm<RegisterFormInput>({
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const { control, handleSubmit } = useForm<RegisterFormValues>({
         defaultValues: {
             name: '',
             email: '',
@@ -24,33 +22,16 @@ export default function RegisterForm() {
         }
     });
 
-    const validationRules = {
-        name: {
-            required: 'Please enter name.',
-            maxLength: { value: 128, message: 'Please enter passowrd at most 128 characters.' },
-        },
-        email: {
-            required: 'Please enter email.',
-        },
-        password: {
-            required: 'Please enter password.',
-            minLength: { value: 8, message: 'Please enter passowrd at least 8 characters.' },
-        },
-    }
-
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const onSubmit: SubmitHandler<RegisterFormInput> = async (data) => {
+    const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
         console.log(data);
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:8080/api/user', data, { withCredentials: true })
+            await axios.post('http://localhost:8080/api/user', data, { withCredentials: true })
                 .then((res) => console.log(res))
                 .catch((error) => {
                     throw new Error(error);
@@ -75,7 +56,7 @@ export default function RegisterForm() {
                 <Controller
                     name='name'
                     control={control}
-                    rules={validationRules.name}
+                    rules={RegisterFormRules.name}
                     render={({ field, fieldState }) => (
                         <FormControl fullWidth>
                             <TextField
@@ -94,7 +75,7 @@ export default function RegisterForm() {
                 <Controller
                     name='email'
                     control={control}
-                    rules={validationRules.email}
+                    rules={RegisterFormRules.email}
                     render={({ field, fieldState }) => (
                         <FormControl fullWidth>
                             <TextField
@@ -113,7 +94,7 @@ export default function RegisterForm() {
                 <Controller
                     name='password'
                     control={control}
-                    rules={validationRules.password}
+                    rules={RegisterFormRules.password}
                     render={({ field, fieldState }) => (
 
                         <FormControl variant="outlined">
@@ -162,6 +143,7 @@ export default function RegisterForm() {
                         />
                     )}
                 </Box>
+                <LoginLink />
             </Stack>
         </>
     )
