@@ -1,27 +1,15 @@
-import { Button, Container, Input, Stack, TextField, Typography } from '@mui/material';
+import { Button, Container, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
-interface StoreThreadInput {
-    user_id: number,
-    title: string,
-    content: string,
-}
-
-interface AuthUserData {
-    id: number,
-    name: string,
-    email: string,
-    password: string,
-}
+import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
+import { StoreThreadInterface } from '../../interfaces/Thread/StoreThreadInterface';
 
 export default function CreateThread() {
-
-
     const router = useRouter();
-    const [user, setUser] = useState<AuthUserData>({
+    const { register, handleSubmit } = useForm<StoreThreadInterface>();
+    const [user, setUser] = useState<AuthUserInterface>({
         id: 0,
         name: '',
         email: '',
@@ -29,12 +17,13 @@ export default function CreateThread() {
     });
 
     useEffect(() => {
-        getUser(setUser);
+        axios.get('http://localhost:8080/api/user', { withCredentials: true })
+            .then((response) => {
+                setUser(response.data);
+            });
     }, []);
 
-    const { register, handleSubmit } = useForm<StoreThreadInput>();
-
-    const onSubmit: SubmitHandler<StoreThreadInput> = async (data) => {
+    const onSubmit: SubmitHandler<StoreThreadInterface> = async (data) => {
         data = {
             ...data,
             user_id: user['id'],
@@ -53,13 +42,7 @@ export default function CreateThread() {
 
     return (
         <>
-            <Container sx={{ mt: 10 }}>
-                <Typography>
-                   id : {user['id']}
-                </Typography>
-                <Typography>
-                    name : {user['name']}
-                </Typography>
+            <Container sx={{ mt: 4 }}>
                 <Stack
                     spacing={4}
                     component='form'
@@ -89,12 +72,4 @@ export default function CreateThread() {
             </Container>
         </>
     )
-}
-
-async function getUser(setUser: any)
-{
-    axios.get('http://localhost:8080/api/user', { withCredentials: true })
-        .then((response) => {
-            setUser(response.data);
-        });
 }
