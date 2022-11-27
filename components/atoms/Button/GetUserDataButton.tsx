@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export const GetUserDataButton = () => {
     const handleClick = () => {
-        axios.get('http://localhost:8080/api/user', { withCredentials: true }).then((response) => {
-            console.log(response.data);
+        axios.get('http://localhost:8081/api/user', { withCredentials: true }).then((res) => {
+            console.log(res.data);
         });
     }
 

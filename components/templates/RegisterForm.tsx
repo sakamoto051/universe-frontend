@@ -31,7 +31,7 @@ export default function RegisterForm() {
         console.log(data);
         setLoading(true);
         try {
-            await axios.post('http://localhost:8080/api/user', data, { withCredentials: true })
+            await axios.post('http://localhost:8081/api/user', data, { withCredentials: true })
                 .then((res) => console.log(res))
                 .catch((error) => {
                     throw new Error(error);

@@ -7,10 +7,9 @@ export const LogoutButton = () => {
 
     const handleClick = () => {
         axios.get(
-            'http://localhost:8080/api/logout',
+            'http://localhost:8081/api/logout',
             { withCredentials: true }
-        )
-        .then((response) => {
+        ).then((response) => {
             console.log(response.data);
         });
         router.push('/login');

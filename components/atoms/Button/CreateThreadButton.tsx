@@ -5,7 +5,7 @@ export const CreateThreadButton = () => {
     const router = useRouter();
     
     const handleClick = () => {
-        router.push('/threads/create');
+        router.push('/thread/create');
     }
     
     return (

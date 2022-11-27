@@ -11,7 +11,7 @@ type Data = {
 }
 
 const api = async () => {
-  const response = await fetch('http://localhost:8080/api/data');
+  const response = await fetch('http://localhost:8081/api/data');
   const res: Data = await response.json();
   return res;
 }

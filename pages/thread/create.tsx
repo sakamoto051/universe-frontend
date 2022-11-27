@@ -17,7 +17,7 @@ export default function CreateThread() {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/user', { withCredentials: true })
+        axios.get('http://localhost:8081/api/user', { withCredentials: true })
             .then((response) => {
                 setUser(response.data);
             });
@@ -29,12 +29,12 @@ export default function CreateThread() {
             user_id: user['id'],
         }
         try {
-            await axios.post('http://localhost:8080/api/thread', data, { withCredentials: true })
+            await axios.post('http://localhost:8081/api/thread', data, { withCredentials: true })
                 .then((res) => console.log(res))
                 .catch((error) => {
                     throw new Error(error);
                 });
-            router.push('/threads');
+            router.push('/thread');
         } catch (error) {
             console.log(error);
         }
