@@ -18,11 +18,11 @@ export const Header = () => {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/user', { withCredentials: true }).then((response) => {
+        axios.get('http://localhost:8081/api/user', { withCredentials: true }).then((response) => {
             setUser(response.data);
         });
     }, []);
-    
+
     return (
         <>
             <Container sx={{ p: 1 }}>

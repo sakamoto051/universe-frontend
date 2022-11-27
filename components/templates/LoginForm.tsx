@@ -25,16 +25,15 @@ export default function LoginForm() {
         console.log(data);
         setLoading(true);
         try {
-            axios.get('http://localhost:8080/sanctum/csrf-cookie', { withCredentials: true }).then(response => {
+            axios.get('http://localhost:8081/sanctum/csrf-cookie', { withCredentials: true }).then(response => {
                 // ログイン処理を実装する
                 axios.post(
-                    'http://localhost:8080/login',
+                    'http://localhost:8081/login',
                     data,
                     { withCredentials: true }
-                )
-                    .then((response) => {
-                        router.push('/threads');
-                    });
+                ).then((response) => {
+                    router.push('/thread');
+                });
             });
         } catch (error) {
             console.log(error);
