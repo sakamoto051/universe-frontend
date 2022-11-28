@@ -1,6 +1,6 @@
 import { Container, Stack, Typography } from '@mui/material';
 import axios from 'axios';
-import { ThreadInterface } from '../../interfaces/Thread/ThreadInterface';
+import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
 
 export default function Thread(thread: ThreadInterface) {
     return (
@@ -22,7 +22,7 @@ export default function Thread(thread: ThreadInterface) {
 }
 
 export async function getStaticPaths() {
-    const res = await axios.get('http://172.20.21.91:8081/api/thread', { withCredentials: true });
+    const res = await axios.get('http://172.20.25.171:8081/api/thread', { withCredentials: true });
     const threads: ThreadInterface[] = res.data;
 
     const paths = threads.map((thread: ThreadInterface) => {
@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-    const res = await axios.get(`http://172.20.21.91:8081/api/thread/${params.id}`, { withCredentials: true });
+    const res = await axios.get(`http://172.20.25.171:8081/api/thread/${params.id}`, { withCredentials: true });
 
     return {
         props: res.data
