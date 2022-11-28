@@ -26,7 +26,9 @@ export async function getStaticPaths() {
     const threads: ThreadInterface[] = res.data;
 
     const paths = threads.map((thread: ThreadInterface) => {
-        return `/thread/${thread.id}`;
+        return {
+            params: { id: thread.id.toString() }
+        }
     });
 
     return {
