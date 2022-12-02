@@ -1,5 +1,6 @@
 import { Container, Stack, Typography } from '@mui/material';
 import axios from 'axios';
+import { BASE_URL } from '../../../consts/consts';
 import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
 
 export default function Thread(thread: ThreadInterface) {
@@ -22,8 +23,11 @@ export default function Thread(thread: ThreadInterface) {
 }
 
 export async function getStaticPaths() {
-    const res = await axios.get('http://172.20.25.171:8081/api/thread', { withCredentials: true });
-    const threads: ThreadInterface[] = res.data;
+    const threads = await axios.get('http://' + BASE_URL + ':8081/api/thread', { withCredentials: true })
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err);
+        })
 
     const paths = threads.map((thread: ThreadInterface) => {
         return {
@@ -38,9 +42,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-    const res = await axios.get(`http://172.20.25.171:8081/api/thread/${params.id}`, { withCredentials: true });
-
+    const thread = await axios.get('http://' + BASE_URL + `:8081/api/thread/${params.id}`, { withCredentials: true })
+        .then(res => res.data)
+        .catch(err => {
+            throw new Error(err);
+        });
     return {
-        props: res.data
+        props: thread,
     }
 }
