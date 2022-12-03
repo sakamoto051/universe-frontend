@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../../consts/consts';
 import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
 
-export default function Thread(props) {
+export default function Thread(props: any) {
     let { thread, comments } = props
     return (
         <>
