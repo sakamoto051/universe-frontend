@@ -1,8 +1,8 @@
 import { Stack, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
+import { axiosGet } from '../../utils/axios';
 import { GetUserDataButton } from '../atoms/Button/GetUserDataButton';
 import { HomeButton } from '../atoms/Button/HomeButton';
 import { LoginButton } from '../atoms/Button/LoginButton';
@@ -18,9 +18,10 @@ export const Header = () => {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8081/api/user', { withCredentials: true }).then((response) => {
-            setUser(response.data);
-        });
+        (async () => {
+            const user = await axiosGet('/api/user');
+            setUser(user);
+        })();
     }, []);
 
     return (

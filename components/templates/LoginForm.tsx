@@ -1,4 +1,4 @@
-import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
@@ -22,7 +22,6 @@ export default function LoginForm() {
     };
 
     const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-        console.log(data);
         setLoading(true);
         try {
             axios.get('http://localhost:8081/sanctum/csrf-cookie', { withCredentials: true }).then(response => {
@@ -36,7 +35,6 @@ export default function LoginForm() {
                 });
             });
         } catch (error) {
-            console.log(error);
             setError(true);
             setLoading(false);
         }
