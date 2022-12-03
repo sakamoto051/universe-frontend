@@ -1,10 +1,10 @@
 import { Button, Container, Stack, TextField } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
 import { StoreThreadInterface } from '../../interfaces/Thread/StoreThreadInterface';
+import { axiosGet, axiosPost } from '../../utils/axios';
 
 export default function CreateThread() {
     const router = useRouter();
@@ -17,10 +17,10 @@ export default function CreateThread() {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:8081/api/user', { withCredentials: true })
-            .then((response) => {
-                setUser(response.data);
-            });
+        (async () => {
+            const user = await axiosGet('/api/user');
+            setUser(user);
+        })();
     }, []);
 
     const onSubmit: SubmitHandler<StoreThreadInterface> = async (data) => {
@@ -29,11 +29,7 @@ export default function CreateThread() {
             user_id: user['id'],
         }
         try {
-            await axios.post('http://localhost:8081/api/thread', data, { withCredentials: true })
-                .then((res) => console.log(res))
-                .catch((error) => {
-                    throw new Error(error);
-                });
+            await axiosPost('/api/thread', data);
             router.push('/thread');
         } catch (error) {
             console.log(error);

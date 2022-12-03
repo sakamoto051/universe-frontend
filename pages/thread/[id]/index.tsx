@@ -1,48 +1,26 @@
-import { Container, Stack, Typography } from '@mui/material';
-import axios from 'axios';
-import { BASE_URL } from '../../../consts/consts';
+import { Container } from '@mui/material';
+import { ThreadDetail } from '../../../components/organisms/ThreadDetail';
 import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
+import { axiosGetSSG, axiosPostSSG } from '../../../utils/axios';
 
-export default function Thread(props) {
+export default function Thread(props: any) {
     let { thread, comments } = props
     return (
-        <>
-            <Container sx={{ mt: 10 }}>
-                {thread && (
-                    <Stack spacing={2}>
-                        <Typography variant='h2'>
-                            {thread.title}
-                        </Typography>
-                        <Typography>
-                            {thread.content}
-                        </Typography>
-                        {comments && comments.map((comment: any) => {
-                            return (
-                                <Typography key={comment.id}>
-                                    {comment.content}
-                                </Typography>
-                            )
-                        })}
-                    </Stack>
-                )}
-            </Container>
-        </>
+        <Container sx={{ mt: 10 }}>
+            {thread && (
+                <ThreadDetail thread={thread} comments={comments} />
+            )}
+        </Container>
     )
 }
 
 export async function getStaticPaths() {
-    const threads = await axios.get(BASE_URL + '/thread', { withCredentials: true })
-        .then(res => res.data)
-        .catch(err => {
-            throw new Error(err);
-        })
-
+    const threads = await axiosGetSSG('/api/thread');
     const paths = threads.map((thread: ThreadInterface) => {
         return {
             params: { id: thread.id.toString() }
         }
     });
-
     return {
         paths,
         fallback: false
@@ -50,18 +28,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-    const thread = await axios.get(BASE_URL + `/thread/${params.id}`, { withCredentials: true })
-        .then(res => res.data)
-        .catch(err => {
-            throw new Error(err);
-        });
-
-    const comments = await axios.post(BASE_URL + '/thread_comments', { thread_id: params.id }, { withCredentials: true })
-        .then(res => res.data)
-        .catch(err => {
-            return new Error(err);
-        });
-    
+    const thread = await axiosGetSSG(`/api/thread/${params.id}`);
+    const comments = await axiosPostSSG('/api/thread_comments', { thread_id: params.id });
     return {
         props: {
             thread,

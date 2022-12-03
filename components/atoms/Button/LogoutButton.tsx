@@ -1,17 +1,12 @@
 import { Button } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
+import { axiosGet } from '../../../utils/axios';
 
 export const LogoutButton = () => {
     const router = useRouter();
 
-    const handleClick = () => {
-        axios.get(
-            'http://localhost:8081/api/logout',
-            { withCredentials: true }
-        ).then((response) => {
-            console.log(response.data);
-        });
+    const handleClick = async () => {
+        await axiosGet('/api/logout');
         router.push('/login');
     }
 

@@ -1,11 +1,10 @@
 import { Button } from '@mui/material';
-import axios from 'axios';
+import { axiosGet } from '../../../utils/axios';
 
 export const GetUserDataButton = () => {
-    const handleClick = () => {
-        axios.get('http://localhost:8081/api/user', { withCredentials: true }).then((res) => {
-            console.log(res.data);
-        });
+    const handleClick = async () => {
+        const user = await axiosGet('/api/user');
+        console.log(user)
     }
 
     return (
