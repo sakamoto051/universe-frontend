@@ -3,7 +3,8 @@ import axios from 'axios';
 import { BASE_URL } from '../../../consts/consts';
 import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
 
-export default function Thread(thread: ThreadInterface) {
+export default function Thread(props) {
+    let { thread, comments } = props
     return (
         <>
             <Container sx={{ mt: 10 }}>
@@ -15,6 +16,13 @@ export default function Thread(thread: ThreadInterface) {
                         <Typography>
                             {thread.content}
                         </Typography>
+                        {comments && comments.map((comment: any) => {
+                            return (
+                                <Typography key={comment.id}>
+                                    {comment.content}
+                                </Typography>
+                            )
+                        })}
                     </Stack>
                 )}
             </Container>
@@ -23,7 +31,7 @@ export default function Thread(thread: ThreadInterface) {
 }
 
 export async function getStaticPaths() {
-    const threads = await axios.get('http://' + BASE_URL + ':8081/api/thread', { withCredentials: true })
+    const threads = await axios.get(BASE_URL + '/thread', { withCredentials: true })
         .then(res => res.data)
         .catch(err => {
             throw new Error(err);
@@ -42,12 +50,22 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-    const thread = await axios.get('http://' + BASE_URL + `:8081/api/thread/${params.id}`, { withCredentials: true })
+    const thread = await axios.get(BASE_URL + `/thread/${params.id}`, { withCredentials: true })
         .then(res => res.data)
         .catch(err => {
             throw new Error(err);
         });
+
+    const comments = await axios.post(BASE_URL + '/thread_comments', { thread_id: params.id }, { withCredentials: true })
+        .then(res => res.data)
+        .catch(err => {
+            return new Error(err);
+        });
+    
     return {
-        props: thread,
+        props: {
+            thread,
+            comments,
+        }
     }
 }
