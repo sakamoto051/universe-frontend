@@ -10,17 +10,21 @@ export default function Threads() {
     const router = useRouter();
 
     useEffect(() => {
-        axios.get('http://localhost:8081/api/thread', { withCredentials: true }).then((res) => {
-            res.data.forEach((thread: ThreadInterface) => {
-                const newThread: ThreadInterface = {
-                    id: thread.id,
-                    user_id: thread.user_id,
-                    title: thread.title,
-                    content: thread.content,
-                }
-                setThreads((prevState) => [...prevState, newThread]);
-            })
-        });
+        try {
+            axios.get('http://localhost:8081/api/thread', { withCredentials: true }).then((res) => {
+                res.data.forEach((thread: ThreadInterface) => {
+                    const newThread: ThreadInterface = {
+                        id: thread.id,
+                        user_id: thread.user_id,
+                        title: thread.title,
+                        content: thread.content,
+                    }
+                    setThreads((prevState) => [...prevState, newThread]);
+                })
+            });
+        } catch (e: any) {
+            throw new Error(e);
+        }
     }, []);
 
     return (
