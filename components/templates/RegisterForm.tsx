@@ -7,7 +7,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { LoginLink } from '../atoms/Link/LoginLink';
 import { RegisterFormValues } from '../../interfaces/RegisterFormValues';
 import { RegisterFormRules } from '../../rules/RegisterFormRules';
-import { axiosPost } from '../../utils/axios';
+import { axiosPost } from '../../functions/AxiosClientProvider';
 
 export default function RegisterForm() {
     const router = useRouter();

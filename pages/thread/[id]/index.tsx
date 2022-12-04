@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import { ThreadDetail } from '../../../components/organisms/ThreadDetail';
 import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
-import { axiosGetSSG, axiosPostSSG } from '../../../utils/axios';
+import { axiosGetSSG, axiosPostSSG } from '../../../functions/AxiosClientProvider';
 
 export default function Thread(props: any) {
     let { thread, comments } = props

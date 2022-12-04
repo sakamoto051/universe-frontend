@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { BASE_URL, SSG_URL } from '../env';
 
 export const axiosGet = async (url: string) => {
     const res = await axios({
         method: 'get',
-        url: BASE_URL + url,
+        url: process.env.NEXT_PUBLIC_API_URL + url,
         withCredentials: true,
     })
         .then(res => res.data)
@@ -17,7 +16,7 @@ export const axiosGet = async (url: string) => {
 export const axiosPost = async (url: string, data: Object) => {
     const res = await axios({
         method: 'post',
-        url: BASE_URL + url,
+        url: process.env.NEXT_PUBLIC_API_URL + url,
         data: data,
         withCredentials: true,
     })
@@ -31,7 +30,7 @@ export const axiosPost = async (url: string, data: Object) => {
 export const axiosGetSSG = async (url: string) => {
     const res = await axios({
         method: 'get',
-        url: SSG_URL + url,
+        url: process.env.NEXT_PUBLIC_SSG_URL + url,
         withCredentials: true,
     })
         .then(res => res.data)
@@ -44,7 +43,7 @@ export const axiosGetSSG = async (url: string) => {
 export const axiosPostSSG = async (url: string, data: Object) => {
     const res = await axios({
         method: 'post',
-        url: SSG_URL + url,
+        url: process.env.NEXT_PUBLIC_SSG_URL + url,
         data: data,
         withCredentials: true,
     })
