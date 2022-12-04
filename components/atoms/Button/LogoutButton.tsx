@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
-import { axiosGet } from '../../../utils/axios';
+import { axiosGet } from '../../../functions/AxiosClientProvider';
 
 export const LogoutButton = () => {
     const router = useRouter();

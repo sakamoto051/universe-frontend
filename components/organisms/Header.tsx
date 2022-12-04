@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useEffect, useState } from 'react';
 import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
-import { axiosGet } from '../../utils/axios';
+import { axiosGet } from '../../functions/AxiosClientProvider';
 import { GetUserDataButton } from '../atoms/Button/GetUserDataButton';
 import { HomeButton } from '../atoms/Button/HomeButton';
 import { LoginButton } from '../atoms/Button/LoginButton';

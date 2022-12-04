@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { axiosGet } from '../../../utils/axios';
+import { axiosGet } from '../../../functions/AxiosClientProvider';
 
 export const GetUserDataButton = () => {
     const handleClick = async () => {

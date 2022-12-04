@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
 import { StoreThreadInterface } from '../../interfaces/Thread/StoreThreadInterface';
-import { axiosGet, axiosPost } from '../../utils/axios';
+import { axiosGet, axiosPost } from '../../functions/AxiosClientProvider';
 
 export default function CreateThread() {
     const router = useRouter();
