@@ -4,7 +4,8 @@ import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
 import { axiosGetSSG, axiosPostSSG } from '../../../functions/AxiosClientProvider';
 
 export default function Thread(props: any) {
-    let { thread, comments } = props
+    let { thread, comments } = props.data
+    console.log(thread);
     return (
         <Container sx={{ mt: 10 }}>
             {thread && (
@@ -28,12 +29,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-    const thread = await axiosGetSSG(`/api/thread/${params.id}`);
-    const comments = await axiosPostSSG('/api/thread_comments', { thread_id: params.id });
+    // const thread = await axiosGetSSG(`/api/thread/${params.id}`);
+    const data = await axiosPostSSG('/api/thread_detail', { thread_id: params.id });
     return {
         props: {
-            thread,
-            comments,
+            data,
+            // comments,
         }
     }
 }
