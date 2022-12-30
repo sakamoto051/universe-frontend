@@ -3,4 +3,5 @@ export interface CommentInterface {
     user_id: number,
     thread_id: number,
     content: string,
+    created_at: string,
 }
