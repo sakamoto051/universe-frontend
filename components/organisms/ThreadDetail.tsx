@@ -16,11 +16,6 @@ export const ThreadDetail = ({
             <Typography variant='h2'>
                 {thread.title}
             </Typography>
-            <Card>
-                <CardContent>
-                    {thread.content}
-                </CardContent>
-            </Card>
             {comments && comments.map((comment: CommentInterface) => {
                 return (
                     <CommentCard comment={comment} key={comment.id} />
