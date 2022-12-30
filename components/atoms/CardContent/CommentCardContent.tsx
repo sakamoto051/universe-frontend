@@ -12,8 +12,6 @@ export const CommentCardContent = ({
                 {comment.id} : {comment.created_at}
             </Typography>
             <Typography>
-            </Typography>
-            <Typography>
                 {comment.content}
             </Typography>
         </CardContent>
