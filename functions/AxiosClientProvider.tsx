@@ -53,3 +53,17 @@ export const axiosPostSSG = async (url: string, data: Object) => {
         })
     return res;
 }
+
+export const axiosLogin = async (url: string, data: Object) => {
+    await axios({
+        method: 'get',
+        url: process.env.NEXT_PUBLIC_SSG_URL + '/sanctum/csrf-cookie',
+        data: data,
+        withCredentials: true,
+    })
+        .then((res) => {
+            axiosPost(url, data);
+        }).catch((err) => {
+            throw new Error(err);
+        });
+}

@@ -9,6 +9,7 @@ import { RegisterLink } from '../atoms/Link/RegisterLink';
 import { LoginFormValues } from '../../interfaces/LoginFormValues';
 import { LoginFormRules } from '../../rules/LoginFormRules';
 import { Loading } from '../atoms/Loading';
+import { axiosLogin, axiosPost } from '../../functions/AxiosClientProvider';
 
 export default function LoginForm() {
     const router = useRouter();
@@ -23,21 +24,8 @@ export default function LoginForm() {
 
     const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
         setLoading(true);
-        try {
-            axios.get('http://localhost:8081/sanctum/csrf-cookie', { withCredentials: true }).then(response => {
-                // ログイン処理を実装する
-                axios.post(
-                    'http://localhost:8081/login',
-                    data,
-                    { withCredentials: true }
-                ).then((response) => {
-                    router.push('/thread');
-                });
-            });
-        } catch (error) {
-            setError(true);
-            setLoading(false);
-        }
+        axiosLogin('/login', data);
+        router.push('/thread');
     }
 
     return (
