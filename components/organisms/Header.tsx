@@ -1,41 +1,28 @@
 import { Stack, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import { useEffect, useState } from 'react';
-import { AuthUserInterface } from '../../interfaces/AuthUserInterface';
-import { axiosGet } from '../../functions/AxiosClientProvider';
 import { GetUserDataButton } from '../atoms/Button/GetUserDataButton';
 import { HomeButton } from '../atoms/Button/HomeButton';
 import { LoginButton } from '../atoms/Button/LoginButton';
 import { LogoutButton } from '../atoms/Button/LogoutButton';
 import { RegisterButton } from '../atoms/Button/RegisterButton';
+import useSWR from 'swr';
+import { fetcher } from '../../functions/CommonProvider';
+import { BasicLoading } from '../atoms/Loading/BasicLoading';
 
 export const Header = () => {
-    const [user, setUser] = useState<AuthUserInterface>({
-        id: 0,
-        name: '',
-        email: '',
-        password: '',
-    });
-
-    useEffect(() => {
-        (async () => {
-            const user = await axiosGet('/api/user');
-            setUser(user);
-        })();
-    }, []);
+    const { data, error, isLoading } = useSWR('/api/user', fetcher);
+    if (!data) return <BasicLoading />
 
     return (
-        <>
-            <Container sx={{ p: 1 }}>
-                <Stack spacing={2} direction='row'>
-                    <HomeButton />
-                    <RegisterButton />
-                    <LoginButton />
-                    <LogoutButton />
-                    <GetUserDataButton />
-                    <Typography>Welcome {user.name}</Typography>
-                </Stack>
-            </Container>
-        </>
+        <Container sx={{ p: 1 }}>
+            <Stack spacing={2} direction='row'>
+                <HomeButton />
+                <RegisterButton />
+                <LoginButton />
+                <LogoutButton />
+                <GetUserDataButton />
+                <Typography>Welcome {data.name}</Typography>
+            </Stack>
+        </Container>
     );
 }

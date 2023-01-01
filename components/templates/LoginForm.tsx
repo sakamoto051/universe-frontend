@@ -2,19 +2,16 @@ import { Alert, Box, Button, IconButton, InputAdornment, Stack, TextField } from
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RegisterLink } from '../atoms/Link/RegisterLink';
 import { LoginFormValues } from '../../interfaces/LoginFormValues';
 import { LoginFormRules } from '../../rules/LoginFormRules';
-import { Loading } from '../atoms/Loading';
-import { axiosLogin, axiosPost } from '../../functions/AxiosClientProvider';
+import { axiosLogin } from '../../functions/AxiosClientProvider';
 
 export default function LoginForm() {
     const router = useRouter();
     const { register, handleSubmit } = useForm<LoginFormValues>();
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -23,9 +20,8 @@ export default function LoginForm() {
     };
 
     const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-        setLoading(true);
-        axiosLogin('/login', data);
-        router.push('/thread');
+        await axiosLogin(data);
+        await router.push('/thread');
     }
 
     return (
@@ -43,7 +39,6 @@ export default function LoginForm() {
                     {...register('email')}
                     label='Email'
                     type='email'
-                    disabled={loading}
                     inputProps={LoginFormRules.email}
                 />
 
@@ -52,7 +47,6 @@ export default function LoginForm() {
                     id="password"
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
-                    disabled={loading}
                     inputProps={LoginFormRules.password}
                     InputProps={{
                         endAdornment:
@@ -70,12 +64,10 @@ export default function LoginForm() {
                     <Button
                         variant="contained"
                         fullWidth
-                        disabled={loading}
                         type='submit'
                     >
                         Login
                     </Button>
-                    {loading && <Loading />}
                 </Box>
                 <RegisterLink />
             </Stack>

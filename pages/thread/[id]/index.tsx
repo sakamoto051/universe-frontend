@@ -1,40 +1,20 @@
 import { Container } from '@mui/material';
 import { ThreadDetail } from '../../../components/organisms/ThreadDetail';
-import { ThreadInterface } from '../../../interfaces/Thread/ThreadInterface';
-import { axiosGetSSG, axiosPostSSG } from '../../../functions/AxiosClientProvider';
+import useSWR from 'swr';
+import { useRouter } from 'next/router';
+import { fetcher } from '../../../functions/CommonProvider';
+import { BasicLoading } from '../../../components/atoms/Loading/BasicLoading';
+    
+export default function Thread() {
+    const router = useRouter();
+    const thread_id = router.query.id;
 
-export default function Thread(props: any) {
-    let { thread, comments } = props.data
-    console.log(thread);
+    const { data, error, isLoading } = useSWR('/api/thread_detail/' + thread_id, fetcher);
+    if (!data) return <BasicLoading /> 
+    
     return (
         <Container sx={{ mt: 10 }}>
-            {thread && (
-                <ThreadDetail thread={thread} comments={comments} />
-            )}
+            <ThreadDetail thread={data.thread} comments={data.comments} />
         </Container>
     )
-}
-
-export async function getStaticPaths() {
-    const threads = await axiosGetSSG('/api/thread');
-    const paths = threads.map((thread: ThreadInterface) => {
-        return {
-            params: { id: thread.id.toString() }
-        }
-    });
-    return {
-        paths,
-        fallback: false
-    }
-}
-
-export async function getStaticProps({ params }: any) {
-    // const thread = await axiosGetSSG(`/api/thread/${params.id}`);
-    const data = await axiosPostSSG('/api/thread_detail', { thread_id: params.id });
-    return {
-        props: {
-            data,
-            // comments,
-        }
-    }
 }
