@@ -9,6 +9,7 @@ export const fetcher = async (url: string) => {
     .then(res => res.data)
     .catch(err => {
         console.log(err);
+        window.location.href = process.env.NEXT_PUBLIC_APP_URL + '/login';
     });
     return res;
 }
