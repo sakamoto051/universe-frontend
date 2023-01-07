@@ -9,7 +9,7 @@ export const CommentCardContent = ({
     return (
         <CardContent>
             <Typography>
-                {comment.id} : {comment.created_at}
+                {comment.comment_no} : {comment.created_at}
             </Typography>
             <Typography>
                 {comment.content}
