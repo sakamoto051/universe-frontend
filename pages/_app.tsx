@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       { pathname !== '/register' && 
         pathname !== '/login' &&
+        pathname !== '/' &&
         <Header />
       }
       <Component {...pageProps} />
