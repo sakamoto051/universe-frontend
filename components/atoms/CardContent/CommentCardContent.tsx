@@ -8,12 +8,14 @@ export const CommentCardContent = ({
 }) => {
     return (
         <CardContent>
-            <Typography>
-                {comment.comment_no} : {comment.created_at}
-            </Typography>
-            <Typography>
-                {comment.content}
-            </Typography>
+            <pre>
+                <Typography>
+                    {comment.comment_no} : {comment.created_at}
+                </Typography>
+                <Typography>
+                    {comment.content}
+                </Typography>
+            </pre>
         </CardContent>
     )
 }
