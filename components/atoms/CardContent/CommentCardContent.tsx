@@ -6,6 +6,7 @@ export const CommentCardContent = ({
 }: {
     comment: CommentInterface
 }) => {
+    console.log(comment);
     return (
         <CardContent>
             <Typography>

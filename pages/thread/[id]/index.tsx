@@ -1,6 +1,6 @@
 import { Button, Container, Drawer, List, Stack, TextField } from '@mui/material';
 import { ThreadDetail } from '../../../components/organisms/ThreadDetail';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { useRouter } from 'next/router';
 import { fetcher } from '../../../functions/CommonProvider';
 import { BasicLoading } from '../../../components/atoms/Loading/BasicLoading';
@@ -13,19 +13,18 @@ export default function Thread() {
     const router = useRouter();
     const thread_id = router.query.id;
     const [state, setState] = useState(false);
-    const { data: thread_detail } = useSWR('/api/thread_detail/' + thread_id, fetcher);
+    const [content, setContent] = useState('');
+    const { data: thread_detail, mutate } = useSWR('/api/thread_detail/' + thread_id, fetcher);
     const { data: user } = useSWR('/api/user', fetcher);
     const { register, handleSubmit, setValue } = useForm<StoreCommentInput>();
-    if (!thread_detail) return <BasicLoading />
-    if (!thread_id) {
-        return;
-    }
+    if (!thread_detail || !thread_id) return <BasicLoading />
     setValue('user_id', user.id);
     setValue('thread_id', +thread_id);
 
     const onSubmit: SubmitHandler<StoreCommentInput> = async (data) => {
         await axiosPost('/api/comment', data);
-        router.reload();
+        setContent('');
+        mutate('/api/thread_detail/' + thread_id);
     }
 
     const toggleDrawer =
@@ -36,7 +35,7 @@ export default function Thread() {
     
     return (
         <Container sx={{ mt: 10 }}>
-            <ThreadDetail thread={thread_detail.thread} comments={thread_detail.comments} />
+            {thread_detail && <ThreadDetail thread={thread_detail.thread} comments={thread_detail.comments} /> }
 
             <Container sx={{ position: 'fixed', bottom: '5%', left: '80%' }}>
                 <Button variant='contained' onClick={toggleDrawer(true)}>
@@ -60,7 +59,9 @@ export default function Thread() {
                             multiline
                             rows={10}
                             variant="outlined"
+                            value={content}
                             {...register('content')}
+                            onChange={(e) => setContent(e.target.value)}
                         />
                         <Button
                             type='submit'
