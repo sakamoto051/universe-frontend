@@ -37,7 +37,7 @@ export default function Thread() {
             };
     
     return (
-        <Container sx={{ mt: 10 }}>
+        <Container sx={{ mt: 2 }}>
             {thread_detail &&
                 <ThreadDetail
                     thread={thread_detail.thread}

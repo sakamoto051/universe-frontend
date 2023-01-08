@@ -12,13 +12,13 @@ export const ThreadDetail = ({
     thread: ThreadInterface,
     comments: CommentInterface[],
 }) => {
-    if (!thread) return <BasicLoading />
+    if (!thread || !comments) return <BasicLoading />
     return (
         <Stack spacing={1} sx={{ mb: 2 }}>
             <Typography variant='h5'>
                 {thread.title}
             </Typography>
-            {comments && comments.map((comment: CommentInterface) => {
+            {comments.map((comment: CommentInterface) => {
                 return (
                     <CommentCard comment={comment} key={comment.id} />
                 )

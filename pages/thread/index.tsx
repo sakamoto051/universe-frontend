@@ -1,5 +1,4 @@
-import { Container, Stack } from '@mui/material';
-import { CreateThreadButton } from '../../components/atoms/Button/CreateThreadButton';
+import { Container, Stack, Typography } from '@mui/material';
 import { ThreadCard } from '../../components/molecules/Card/ThreadCard';
 import { ThreadInterface } from '../../interfaces/Thread/ThreadInterface';
 import useSWR, { useSWRConfig } from 'swr';
@@ -37,29 +36,30 @@ export default function Threads() {
             };
     
     return (
-        <Container sx={{ mt: 4 }}>
+        <Container sx={{ mt: 2 }}>
             <Stack spacing={2} sx={{ mb: 2 }}>
+                <Typography variant='h5'>All Threads</Typography>
                 {threads && threads.map((thread: ThreadInterface) => {
                     return (
                         <ThreadCard thread={thread} key={thread.id} />
                     )
                 })}
-            </Stack>
 
-            <Container sx={{ position: 'fixed', bottom: '5%', left: '80%' }}>
-                <StoreThreadToggleButton toggleDrawer={toggleDrawer} />
-            </Container>
-            <StoreThreadDrawer
-                state={state}
-                toggleDrawer={toggleDrawer}
-                handleSubmit={handleSubmit}
-                onSubmit={onSubmit}
-                register={register}
-                title={title}
-                content={content}
-                setTitle={setTitle}
-                setContent={setContent}
-            />
+                <Container sx={{ position: 'fixed', bottom: '5%', left: '80%' }}>
+                    <StoreThreadToggleButton toggleDrawer={toggleDrawer} />
+                </Container>
+                <StoreThreadDrawer
+                    state={state}
+                    toggleDrawer={toggleDrawer}
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    register={register}
+                    title={title}
+                    content={content}
+                    setTitle={setTitle}
+                    setContent={setContent}
+                    />
+            </Stack>
         </Container>
     )
 }
