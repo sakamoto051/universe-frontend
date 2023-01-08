@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import { ThreadDetail } from '../../../components/organisms/ThreadDetail';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 import { fetcher } from '../../../functions/CommonProvider';
 import { BasicLoading } from '../../../components/atoms/Loading/BasicLoading';
@@ -16,8 +16,9 @@ export default function Thread() {
     const thread_id = router.query.id;
     const [state, setState] = useState(false);
     const [content, setContent] = useState('');
-    const { data: thread_detail, mutate } = useSWR('/api/thread_detail/' + thread_id, fetcher);
+    const { data: thread_detail } = useSWR('/api/thread_detail/' + thread_id, fetcher);
     const { data: user } = useSWR('/api/user', fetcher);
+    const { mutate } = useSWRConfig();
     const { register, handleSubmit, setValue } = useForm<StoreCommentInput>();
     if (!thread_detail || !thread_id) return <BasicLoading />
     setValue('user_id', user.id);

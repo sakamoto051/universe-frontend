@@ -3,7 +3,7 @@ import { Container, Stack } from '@mui/system'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { SubmitHandler, UseFormRegister } from 'react-hook-form'
 import { StoreCommentInput } from '../../../interfaces/Comment/StoreCommentInput'
-import { StoreCommentButton } from '../../atoms/Button/StoreCommentButton'
+import { SubmitButton } from '../../atoms/Button/SubmitButton'
 import { StoreCommentTextField } from '../../atoms/TextField/StoreCommentTextField'
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
     setContent: Dispatch<SetStateAction<string>>
 }
 
-export const StoreCommentForm: FC<Props> = ({handleSubmit, onSubmit, register, content, setContent}) => {
+export const StoreCommentForm: FC<Props> = ({ handleSubmit, onSubmit, register, content, setContent }) => {
     return (
         <List>
             <Container>
@@ -24,7 +24,7 @@ export const StoreCommentForm: FC<Props> = ({handleSubmit, onSubmit, register, c
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <StoreCommentTextField register={register} content={content} setContent={setContent} />
-                    <StoreCommentButton />
+                    <SubmitButton>submit</SubmitButton>
                 </Stack>
             </Container>
         </List>
