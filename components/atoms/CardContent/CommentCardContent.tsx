@@ -8,14 +8,12 @@ export const CommentCardContent = ({
 }) => {
     return (
         <CardContent>
-            <pre>
                 <Typography>
                     {comment.comment_no} : {comment.created_at}
                 </Typography>
-                <Typography>
+                <Typography style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}>
                     {comment.content}
                 </Typography>
-            </pre>
         </CardContent>
     )
 }
