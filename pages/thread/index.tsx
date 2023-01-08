@@ -38,8 +38,7 @@ export default function Threads() {
     
     return (
         <Container sx={{ mt: 4 }}>
-            <Stack spacing={2}>
-                <CreateThreadButton />
+            <Stack spacing={2} sx={{ mb: 2 }}>
                 {threads && threads.map((thread: ThreadInterface) => {
                     return (
                         <ThreadCard thread={thread} key={thread.id} />
