@@ -20,7 +20,7 @@ export const ThreadDetail = ({
             </Typography>
             {comments.map((comment: CommentInterface) => {
                 return (
-                    <CommentCard comment={comment} key={comment.id} />
+                    <CommentCard comment={comment} key={comment.id} comments={comments}/>
                 )
             })}
         </Stack>

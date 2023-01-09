@@ -3,13 +3,15 @@ import { CommentInterface } from '../../../interfaces/Comment/CommnetInterface';
 import { CommentCardContent } from '../../atoms/CardContent/CommentCardContent';
 
 export const CommentCard = ({
-    comment
+    comment,
+    comments,
 }: {
     comment: CommentInterface
+    comments: CommentInterface[]
 }) => {
     return (
         <Card id={comment.comment_no}>
-            <CommentCardContent comment={comment} />
+            <CommentCardContent comment={comment} comments={comments} />
         </Card>
     )
 }

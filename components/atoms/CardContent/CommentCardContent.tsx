@@ -2,17 +2,21 @@ import { CardContent, Link, Tooltip, Typography } from '@mui/material'
 import { CommentInterface } from '../../../interfaces/Comment/CommnetInterface'
 
 export const CommentCardContent = ({
-    comment
+    comment,
+    comments,
 }: {
     comment: CommentInterface
+    comments: CommentInterface[]
 }) => {
     const res = comment.content.match(/>+\d{1,3}/g)
     let contents = null;
     let links = new Array();
+    let tool_contents = new Array();
     if (res) {
         contents = comment.content.split(/>+\d{1,3}/);
         res.forEach((anchor) => {
             links.push('#' + anchor.replace('>>', ''));
+            tool_contents.push(comments[+anchor.replace('>>', '') - 1].content);
         });
     }
     return (
@@ -22,13 +26,18 @@ export const CommentCardContent = ({
             </Typography>
             <Typography
                 style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
-                
             >
                 {(res && contents) ? contents.map((content, index) => {
                     return (
                         <Typography sx={{ display: 'inline' }}>
                             <Link href={links[index - 1]}>
-                                <Tooltip title={res[index -1]} placement="top">
+                                <Tooltip title={
+                                    <Typography>
+                                        <pre>
+                                            {tool_contents[index - 1]}
+                                        </pre>
+                                    </Typography>
+                                } placement="top">
                                     <Typography sx={{ display: 'inline' }}>
                                         {res[index - 1]}
                                     </Typography>
