@@ -8,7 +8,7 @@ export const CommentCard = ({
     comment: CommentInterface
 }) => {
     return (
-        <Card id={comment.id}>
+        <Card id={comment.comment_no}>
             <CommentCardContent comment={comment} />
         </Card>
     )
