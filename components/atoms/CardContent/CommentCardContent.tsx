@@ -32,11 +32,9 @@ export const CommentCardContent = ({
                         <Typography sx={{ display: 'inline' }}>
                             <Link href={links[index - 1]}>
                                 <Tooltip title={
-                                    <Typography>
-                                        <pre>
-                                            {tool_contents[index - 1]}
-                                        </pre>
-                                    </Typography>
+                                    <pre>
+                                        {tool_contents[index - 1]}
+                                    </pre>
                                 } placement="top">
                                     <Typography sx={{ display: 'inline' }}>
                                         {res[index - 1]}
