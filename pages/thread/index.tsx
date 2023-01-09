@@ -27,6 +27,7 @@ export default function Threads() {
         setTitle('');
         setContent('');
         mutate('/api/thread');
+        setState(false);
     }
 
     const toggleDrawer =

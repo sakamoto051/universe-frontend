@@ -28,6 +28,7 @@ export default function Thread() {
         await axiosPost('/api/comment', data);
         setContent('');
         mutate('/api/thread_detail/' + thread_id);
+        setState(false);
     }
 
     const toggleDrawer =
