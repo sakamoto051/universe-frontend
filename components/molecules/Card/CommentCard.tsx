@@ -10,7 +10,7 @@ export const CommentCard = ({
     comments: CommentInterface[]
 }) => {
     return (
-        <Card id={comment.comment_no}>
+        <Card key={comment.comment_no}>
             <CommentCardContent comment={comment} comments={comments} />
         </Card>
     )

@@ -29,7 +29,7 @@ export const CommentCardContent = ({
             >
                 {(res && contents) ? contents.map((content, index) => {
                     return (
-                        <Typography sx={{ display: 'inline' }}>
+                        <Typography key={content} sx={{ display: 'inline' }}>
                             <Link href={links[index - 1]}>
                                 <Tooltip title={
                                     <pre>

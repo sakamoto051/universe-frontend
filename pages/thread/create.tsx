@@ -9,7 +9,7 @@ export default function CreateThread() {
     const router = useRouter();
     const { register, handleSubmit, setValue } = useForm<StoreThreadInterface>();
     const user = getAuth();
-    setValue('user_id', user.id);
+    // setValue('user_id', user.id);
 
     const onSubmit: SubmitHandler<StoreThreadInterface> = async (data) => {
         try {

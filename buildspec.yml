@@ -1,0 +1,22 @@
+version: 0.2
+# Codebuild用設定ファイル
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR....
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 227541536114.dkr.ecr.ap-northeast-1.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      - docker build -f ./docker/next/Dockerfile -t universe-frontend:latest .
+      - docker tag universe-frontend:latest 227541536114.dkr.ecr.ap-northeast-1.amazonaws.com/universe-frontend:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker image ls -a
+      - docker push 227541536114.dkr.ecr.ap-northeast-1.amazonaws.com/universe-frontend:latest
+      - printf '[{"name":"%s","imageUri":"%s"}]' universe-frontend 227541536114.dkr.ecr.ap-northeast-1.amazonaws.com/universe-frontend:latest > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
