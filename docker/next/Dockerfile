@@ -11,6 +11,6 @@ COPY ./ /workspace
 RUN npm init -y
 RUN npm install
 RUN npm run build
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["npm", "start"]
