@@ -39,9 +39,9 @@ export const axiosLogin = async (data: Object) => {
         withCredentials: true,
     })
         .then(async (res) => {
-            console.log(getCookieValue('XSRF-TOKEN'));
             console.log(res);
-            await axiosPost('/login', data);
+            const session = await axiosPost('/login', data);
+            console.log({session});
         }).catch((err) => {
             console.log(err);
         });
