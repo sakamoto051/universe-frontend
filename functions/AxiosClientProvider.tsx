@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken } from './CommonProvider';
 
 export const axiosGet = async (url: string) => {
     const res = await axios({
@@ -16,11 +17,15 @@ export const axiosGet = async (url: string) => {
 }
 
 export const axiosPost = async (url: string, data: Object) => {
+    const token = getToken();
     const res = await axios({
         method: 'post',
         url: process.env.NEXT_PUBLIC_API_URL + url,
         data: data,
         withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     })
         .then(res => {
             return res.data;
@@ -39,18 +44,14 @@ export const axiosLogin = async (data: Object) => {
         withCredentials: true,
     })
         .then(async (res) => {
-            console.log(res);
             const token = await axiosPost('/login', data);
-            console.log('token:' + token.token);
             document.cookie = "token=" + token.token;
-            localStorage.setItem('token', token.token);
 
             if (document.cookie != undefined) {
                 const tmp = document.cookie.split('; ').find(row => row.startsWith('token='));
 
                 if (tmp != undefined) {
                     const cookieValue = tmp.split('=')[1];
-                    console.log('value:' + cookieValue);
                 }
             }
 

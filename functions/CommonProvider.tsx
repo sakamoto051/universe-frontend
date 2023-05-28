@@ -2,19 +2,12 @@ import axios from "axios"
 import useSWR from 'swr';
 
 export const fetcher = async (url: string) => {
-    let cookieValue = '';
-    if (document.cookie != undefined) {
-        const tmp = document.cookie.split('; ').find(row => row.startsWith('token='));
-        if (tmp != undefined) {
-            cookieValue = tmp.split('=')[1];
-            console.log('value:' + cookieValue);
-        }
-    }
+    const token = getToken();
     const res = await axios(url, {
         baseURL: process.env.NEXT_PUBLIC_API_URL,
         withCredentials: true,
         headers: {
-            'Authorization': `Bearer ${cookieValue}`
+            'Authorization': `Bearer ${token}`
         }
     })
     .then(res => res.data)
@@ -28,4 +21,15 @@ export const fetcher = async (url: string) => {
 export const getAuth = () => {
     const { data } = useSWR('/api/user', fetcher);
     return data;
+}
+
+export const getToken = () => {
+    let cookieValue = '';
+    if (document.cookie != undefined) {
+        const tmp = document.cookie.split('; ').find(row => row.startsWith('token='));
+        if (tmp != undefined) {
+            cookieValue = tmp.split('=')[1];
+        }
+    }
+    return cookieValue;
 }
