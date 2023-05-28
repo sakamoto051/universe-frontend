@@ -31,16 +31,19 @@ export const axiosPost = async (url: string, data: Object) => {
     return res;
 }
 
-export const axiosLogin = async (data: Object) => {
-    await axios({
+export const axiosLogin = async (datas: Object) => {
+    const { data } = await axios({
         method: 'get',
         url: process.env.NEXT_PUBLIC_API_URL + '/sanctum/csrf-cookie',
-        data: data,
+        data: datas,
         withCredentials: true,
     })
-        .then(async (res) => {
-            await axiosPost('/login', data);
-        }).catch((err) => {
-            console.log(err);
-        });
+        // .then(async (res) => {
+        //     console.log(res);
+        //     // await axiosPost('/login', data);
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
+    
+    console.log(data);
 }

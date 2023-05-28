@@ -21,7 +21,7 @@ export default function LoginForm() {
 
     const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
         await axiosLogin(data);
-        await router.push('/thread');
+        // await router.push('/thread');
     }
 
     return (
