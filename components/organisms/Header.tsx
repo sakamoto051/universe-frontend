@@ -8,8 +8,8 @@ import { BasicLoading } from '../atoms/Loading/BasicLoading';
 import { ThreadButton } from '../atoms/Button/ThreadButton';
 
 export const Header = () => {
-    const { data } = useSWR('/api/user', fetcher);
-    if (!data) return <BasicLoading />
+    // const { data } = useSWR('/api/user', fetcher);
+    // if (!data) return <BasicLoading />
 
     return (
         <Container sx={{ p: 2 }}>

@@ -40,8 +40,21 @@ export const axiosLogin = async (data: Object) => {
     })
         .then(async (res) => {
             console.log(res);
-            const session = await axiosPost('/login', data);
-            console.log({session});
+            const token = await axiosPost('/login', data);
+            console.log('token:' + token.token);
+            document.cookie = "token=" + token.token;
+            localStorage.setItem('token', token.token);
+
+            if (document.cookie != undefined) {
+                const tmp = document.cookie.split('; ').find(row => row.startsWith('token='));
+
+                if (tmp != undefined) {
+                    const cookieValue = tmp.split('=')[1];
+                    console.log('value:' + cookieValue);
+                }
+            }
+
+
         }).catch((err) => {
             console.log(err);
         });

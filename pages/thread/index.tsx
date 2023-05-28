@@ -16,11 +16,11 @@ export default function Threads() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const { data: threads } = useSWR('/api/thread', fetcher);
-    const { data: user } = useSWR('/api/user', fetcher);
+    // const { data: user } = useSWR('/api/user', fetcher);
     const { mutate } = useSWRConfig();
     const { register, handleSubmit, setValue } = useForm<StoreThreadInput>();
-    if (!threads || !user) return <BasicLoading />
-    setValue('user_id', user.id);
+    // if (!threads || !user) return <BasicLoading />
+    // setValue('user_id', user.id);
 
     const onSubmit: SubmitHandler<StoreThreadInput> = async (data) => {
         await axiosPost('/api/thread', data);
