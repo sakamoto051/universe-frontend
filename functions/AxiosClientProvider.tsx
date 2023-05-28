@@ -52,5 +52,11 @@ export const axiosLogin = async (datas: Object) => {
 function getCookieValue(name: any) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    if (parts.length === 2) {
+        const poppedValue = parts.pop();
+        if (poppedValue) {
+            return poppedValue.split(';').shift();
+        }
+    }
+    return undefined;
 }
