@@ -6,6 +6,7 @@ import { StoreThreadInput } from '../../../interfaces/Comment/StoreThreadInput'
 import { SubmitButton } from '../../atoms/Button/SubmitButton'
 import { StoreThreadContentTextField } from '../../atoms/TextField/StoreThreadContentTextField'
 import { StoreThreadTitleTextField } from '../../atoms/TextField/StoreThreadTitleTextField'
+import { CSRFToken } from '../../atoms/CSRFToken'
 
 interface Props {
     handleSubmit: any
@@ -34,6 +35,7 @@ export const StoreThreadForm: FC<Props> = ({
                     component='form'
                     onSubmit={handleSubmit(onSubmit)}
                 >
+                    <CSRFToken />
                     <StoreThreadTitleTextField register={register} title={title} setTitle={setTitle} />
                     <StoreThreadContentTextField register={register} content={content} setContent={setContent} />
                     <SubmitButton>submit</SubmitButton>
