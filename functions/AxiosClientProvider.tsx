@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { getToken } from './CommonProvider';
 
-axios.defaults.headers.common['X-CSRF-Token'] = getToken();
-
 export const axiosGet = async (url: string) => {
     const token = getToken();
     const res = await axios({
@@ -10,7 +8,8 @@ export const axiosGet = async (url: string) => {
         url: process.env.NEXT_PUBLIC_API_URL + url,
         withCredentials: true,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'X-CSRF-TOKEN': token,
         }
     })
         .then(res => {
@@ -30,7 +29,8 @@ export const axiosPost = async (url: string, data: Object) => {
         data: data,
         withCredentials: true,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'X-CSRF-TOKEN': token,
         }
     })
         .then(res => {
