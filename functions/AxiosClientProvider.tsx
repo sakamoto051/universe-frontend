@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getToken } from './CommonProvider';
 
+axios.defaults.headers.common['X-CSRF-Token'] = getToken();
+
 export const axiosGet = async (url: string) => {
     const token = getToken();
     const res = await axios({
