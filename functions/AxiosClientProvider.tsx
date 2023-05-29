@@ -2,10 +2,14 @@ import axios from 'axios';
 import { getToken } from './CommonProvider';
 
 export const axiosGet = async (url: string) => {
+    const token = getToken();
     const res = await axios({
         method: 'get',
         url: process.env.NEXT_PUBLIC_API_URL + url,
         withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     })
         .then(res => {
             return res.data;
