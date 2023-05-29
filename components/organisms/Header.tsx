@@ -11,13 +11,9 @@ import Head from 'next/head';
 export const Header = () => {
     const { data } = useSWR('/api/user', fetcher);
     if (!data) return <BasicLoading />
-    const csrfToken = getToken();
 
     return (
         <Container sx={{ p: 2 }}>
-            <Head>
-                <meta name="csrf-token" content={csrfToken} />
-            </Head>
             <Stack spacing={2} direction='row'>
                 <HomeButton />
                 <ThreadButton />

@@ -2,12 +2,11 @@ import axios from "axios"
 import useSWR from 'swr';
 
 export const fetcher = async (url: string) => {
-    const token = getToken();
     const res = await axios(url, {
         baseURL: process.env.NEXT_PUBLIC_API_URL,
         withCredentials: true,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${getToken()}`
         }
     })
     .then(res => res.data)
