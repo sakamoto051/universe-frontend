@@ -14,10 +14,14 @@ export const Header = () => {
 
     return (
         <Container sx={{ p: 2 }}>
-            <Stack spacing={2} direction='row'>
-                <HomeButton />
-                <ThreadButton />
-                <LogoutButton />
+            <Stack spacing={2} direction="row" justifyContent='space-between'>
+                <Stack spacing={2} direction="row">
+                    <HomeButton />
+                    <ThreadButton />
+                </Stack>
+                <Stack spacing={2} direction="row">
+                    <LogoutButton />
+                </Stack>
             </Stack>
         </Container>
     );

@@ -8,9 +8,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const pathname = router.pathname;
   return (
     <>
-      { pathname !== '/register' && 
+      {pathname !== '/register' &&
         pathname !== '/login' &&
-        pathname !== '/' &&
         <Header />
       }
       <Component {...pageProps} />

@@ -1,53 +1,64 @@
-import { CardContent, Link, Tooltip, Typography } from '@mui/material'
+import { CardContent, Stack, Typography } from '@mui/material'
 import { CommentInterface } from '../../../interfaces/Comment/CommnetInterface'
+import { AnchorTypography } from '../Typography/AnchorTypography'
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 
 export const CommentCardContent = ({
     comment,
     comments,
+    anchorFlg = false,
+    setShowAnchor,
 }: {
-    comment: CommentInterface
-    comments: CommentInterface[]
+    comment: CommentInterface,
+    comments: CommentInterface[],
+    anchorFlg?: Boolean,
+    setShowAnchor?: Dispatch<SetStateAction<Boolean>>,
 }) => {
-    const res = comment.content.match(/>+\d{1,3}/g)
-    let contents = null;
-    let links = new Array();
-    let tool_contents = new Array();
-    if (res) {
-        contents = comment.content.split(/>+\d{1,3}/);
-        res.forEach((anchor) => {
-            links.push('#' + anchor.replace('>>', ''));
-            tool_contents.push(comments[+anchor.replace('>>', '') - 1].content);
-        });
-    }
+    const targetRef = useRef<HTMLElement>();
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const eventTarget = event.target as HTMLElement;
+            if (
+                targetRef.current
+                && !targetRef.current.contains(eventTarget)
+                && !(targetRef.current.parentNode === eventTarget.parentNode?.parentNode)
+                && anchorFlg
+            ) {
+                setShowAnchor && setShowAnchor(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const anchorStyle = anchorFlg
+        ? {
+            border: 'solid 2px #bbb',
+            borderRadius: '2px',
+            zIndex: 2000,
+            position: 'absolute',
+            top: '-60%',
+            left: '0',
+            backgroundColor: '#eee',
+            width: '100%',
+            hidden: {}
+        }
+        : { position: 'relative' };
+
     return (
-        <CardContent>
+        <CardContent sx={anchorStyle} ref={targetRef} >
             <Typography>
                 {comment.comment_no} : {comment.created_at}
             </Typography>
-            <Typography
+            <Stack
                 style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
             >
-                {(res && contents) ? contents.map((content, index) => {
-                    return (
-                        <Typography key={content} sx={{ display: 'inline' }}>
-                            <Link href={links[index - 1]}>
-                                <Tooltip title={
-                                    <pre>
-                                        {tool_contents[index - 1]}
-                                    </pre>
-                                } placement="top">
-                                    <Typography sx={{ display: 'inline' }}>
-                                        {res[index - 1]}
-                                    </Typography>
-                                </Tooltip>
-                            </Link>
-                            {content}
-                        </Typography>
-                    )
-                }) :
-                    comment.content
-                }
-            </Typography>
+                <AnchorTypography comment={comment} comments={comments} ></AnchorTypography>
+            </Stack>
         </CardContent>
     )
 }

@@ -39,7 +39,7 @@ export const axiosPost = async (url: string, data: Object) => {
 }
 
 export const axiosLogin = async (data: Object) => {
-        await axios({
+    await axios({
         method: 'get',
         url: process.env.NEXT_PUBLIC_API_URL + '/sanctum/csrf-cookie',
         withCredentials: true,

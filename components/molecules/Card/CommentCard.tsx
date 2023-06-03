@@ -10,7 +10,7 @@ export const CommentCard = ({
     comments: CommentInterface[]
 }) => {
     return (
-        <Card key={comment.comment_no}>
+        <Card key={comment.comment_no} sx={{ overflow: 'visible' }}>
             <CommentCardContent comment={comment} comments={comments} />
         </Card>
     )
