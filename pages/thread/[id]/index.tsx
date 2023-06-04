@@ -16,7 +16,7 @@ export default function Thread() {
     const thread_id = router.query.id;
     const [state, setState] = useState(false);
     const [content, setContent] = useState('');
-    const { data: thread_detail } = useSWR('/api/thread_detail/' + thread_id, fetcher);
+    const { data: thread_detail } = useSWR(thread_id ? '/api/thread_detail/' + thread_id : null, fetcher);
     const { data: user } = useSWR('/api/user', fetcher);
     const { mutate } = useSWRConfig();
     const { register, handleSubmit, setValue } = useForm<StoreCommentInput>();
@@ -36,7 +36,7 @@ export default function Thread() {
             (event: KeyboardEvent | MouseEvent) => {
                 setState(open);
             };
-    
+
     return (
         <Container sx={{ mt: 2 }}>
             {thread_detail &&
